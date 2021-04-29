@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Data
 @Entity
@@ -16,15 +15,20 @@ public class Email {
     private long id;
 
     @Column(name = "email", length = 40)
-    @NotNull
     private String email;
 
     @Column(name = "email_type", length = 6)
     @NotNull
     private String emailType;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "t_people_id",  referencedColumnName = "id")
     @NotNull
     private People people;
+
+    public Email(String email, String emailType, People people) {
+        this.email = email;
+        this.emailType = emailType;
+        this.people = people;
+    }
 }

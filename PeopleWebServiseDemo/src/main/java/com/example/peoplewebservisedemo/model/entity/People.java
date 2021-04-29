@@ -1,13 +1,18 @@
 package com.example.peoplewebservisedemo.model.entity;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-@Data
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "t_people")
 public class People {
@@ -17,20 +22,24 @@ public class People {
     private long id;
 
     @NotNull
-    @Pattern(regexp = "[^a-zA-Zа-яА-Я/s-]")
     @Column(name = "full_name", length = 90)
     private String fullName;
 
     @Column(name = "pin", length = 10)
-    @Size(min = 10, max = 10, message = "the pin must contains exactly 10 digits")
-    @Pattern(regexp = "^[0-9]", message = "the pin must contains only digits")
     @NotNull
     private String pin;
 
-    @OneToOne(mappedBy = "people")
+    @OneToOne(mappedBy = "people", cascade = CascadeType.ALL)
     private Address address;
 
-    @OneToOne(mappedBy = "people")
+    @OneToOne(mappedBy = "people", cascade = CascadeType.ALL)
     private Email email;
 
+
+    public People(String fullName, String pin, Address address, Email email) {
+        this.fullName = fullName;
+        this.pin = pin;
+        this.address = address;
+        this.email = email;
+    }
 }
