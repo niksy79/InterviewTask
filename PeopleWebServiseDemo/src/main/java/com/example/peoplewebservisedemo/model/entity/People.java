@@ -1,14 +1,11 @@
 package com.example.peoplewebservisedemo.model.entity;
-
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+
 
 @NoArgsConstructor
 @Getter
@@ -30,9 +27,11 @@ public class People {
     private String pin;
 
     @OneToOne(mappedBy = "people", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Address address;
 
     @OneToOne(mappedBy = "people", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Email email;
 
 

@@ -1,11 +1,17 @@
 package com.example.peoplewebservisedemo.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@Data
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "t_mails")
 public class Email {
@@ -24,6 +30,7 @@ public class Email {
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "t_people_id",  referencedColumnName = "id")
     @NotNull
+    @JsonBackReference
     private People people;
 
     public Email(String email, String emailType, People people) {
