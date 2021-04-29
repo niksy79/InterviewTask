@@ -27,7 +27,7 @@ public class Email {
     @NotNull
     private String emailType;
 
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "t_people_id",  referencedColumnName = "id")
     @NotNull
     @JsonBackReference

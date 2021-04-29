@@ -14,9 +14,6 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class PeopleRequestDTO {
 
-
-
-
     @NotEmpty
     @Pattern(regexp = "^[a-zA-Zа-яА-Я- ]+", message = "please, enter a correct name")
     private String fullName;

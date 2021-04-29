@@ -28,7 +28,7 @@ public class Address {
     @Column(name = "addr_type", length = 6)
     private String addrType;
 
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "t_people_id", referencedColumnName = "id")
     @NotNull
     @JsonBackReference
