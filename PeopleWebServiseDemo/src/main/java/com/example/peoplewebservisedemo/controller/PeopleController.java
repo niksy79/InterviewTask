@@ -38,11 +38,10 @@ public class PeopleController extends AbstractController {
     }
 
     @PutMapping("/edit/{id}")
-    public ResponseEntity editDetails(@Valid @RequestBody PeopleRequestDTO requestDTO, @PathVariable long id) {
-
-        personService.editPersonDetails(requestDTO, id);
-        return ResponseEntity.status(HttpStatus.OK)
-                .body("you are updated data successfully");
+    public ResponseEntity<People> editDetails(@Valid @RequestBody PeopleRequestDTO requestDTO, @PathVariable long id) {
+        People result = personService.editPersonDetails(requestDTO, id);
+        
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
 
