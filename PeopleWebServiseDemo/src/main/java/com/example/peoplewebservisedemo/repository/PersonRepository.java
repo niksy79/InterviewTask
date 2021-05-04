@@ -12,5 +12,12 @@ public interface PersonRepository extends JpaRepository<People, Long> {
 
     List<People> findAllByFullNameContaining(String name);
 
+   Boolean existsByPin(String pin);
+
+
+   List<People> findAll();
+
+
+
 
 }

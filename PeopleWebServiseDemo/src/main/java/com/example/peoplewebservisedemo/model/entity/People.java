@@ -4,8 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 
@@ -18,7 +16,6 @@ public class People {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotBlank
     private long id;
 
     @NotNull
@@ -29,11 +26,11 @@ public class People {
     @NotNull
     private String pin;
 
-    @OneToOne(mappedBy = "people", cascade = CascadeType.MERGE)
+    @OneToOne(mappedBy = "people", cascade = CascadeType.ALL)
     @JsonManagedReference
     private Address address;
 
-    @OneToOne(mappedBy = "people", cascade = CascadeType.MERGE)
+    @OneToOne(mappedBy = "people", cascade = CascadeType.ALL)
     @JsonManagedReference
     private Email email;
 

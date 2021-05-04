@@ -1,22 +1,14 @@
 package com.example.peoplewebservisedemo.service;
-
 import com.example.peoplewebservisedemo.dto.PeopleRequestDTO;
 import com.example.peoplewebservisedemo.dto.PeopleResponseDTO;
+import com.example.peoplewebservisedemo.exception.BadRequestException;
 import com.example.peoplewebservisedemo.exception.NotFoundException;
 import com.example.peoplewebservisedemo.model.entity.Address;
 import com.example.peoplewebservisedemo.model.entity.Email;
 import com.example.peoplewebservisedemo.model.entity.People;
-import com.example.peoplewebservisedemo.repository.AddressRepository;
-import com.example.peoplewebservisedemo.repository.EmailRepository;
 import com.example.peoplewebservisedemo.repository.PersonRepository;
-
-import javassist.tools.web.BadHttpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,14 +19,11 @@ public class PersonService {
     @Autowired
     PersonRepository personRepository;
 
-    @Autowired
-    AddressRepository addressRepository;
-
-    @Autowired
-    EmailRepository emailRepository;
-
-
     public PeopleResponseDTO insertPerson(PeopleRequestDTO requestDTO) {
+
+        if (personRepository.existsByPin(requestDTO.getPin())) {
+            throw new BadRequestException("This person already exist");
+        }
 
         People people = new People();
         people.setFullName(requestDTO.getFullName());
@@ -80,18 +69,12 @@ public class PersonService {
         return result;
     }
 
-    public void deletePersonById(long id){
-        //TODO
-        People people = personRepository.getOne(id);
-        personRepository.delete(people);
+    public void deletePersonById(long id) {
+        Optional<People> people = personRepository.findById(id);
+        if (people.isEmpty()) {
+            throw new NotFoundException("Person by id " + id + " was not found");
+        }
+        personRepository.delete(people.get());
     }
-
-    public People getById(long id){
-
-        People result = personRepository.findById(id).get();
-
-        return result;
-    }
-
 
 }

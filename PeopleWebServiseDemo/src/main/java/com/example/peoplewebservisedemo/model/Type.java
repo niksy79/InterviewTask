@@ -1,4 +1,4 @@
 package com.example.peoplewebservisedemo.model;
 
-public class Type {
+public enum Type {
 }
