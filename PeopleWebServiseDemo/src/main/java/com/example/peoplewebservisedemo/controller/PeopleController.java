@@ -1,5 +1,7 @@
 package com.example.peoplewebservisedemo.controller;
+
 import com.example.peoplewebservisedemo.dto.PeopleRequestDTO;
+import com.example.peoplewebservisedemo.dto.PeopleResponseDTO;
 import com.example.peoplewebservisedemo.model.entity.People;
 import com.example.peoplewebservisedemo.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +26,9 @@ public class PeopleController extends AbstractController {
     }
 
     @PostMapping("/insert")
-    public ResponseEntity insertPerson(@Valid @RequestBody PeopleRequestDTO requestDTO) {
-
-        personService.insertPerson(requestDTO);
-
-        return ResponseEntity.status(HttpStatus.OK)
-                .body("you are insert data successfully");
+    public ResponseEntity<PeopleResponseDTO> insertPerson(@Valid @RequestBody PeopleRequestDTO requestDTO) {
+        PeopleResponseDTO result = personService.insertPerson(requestDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     @GetMapping("/get/{name}")
@@ -40,8 +39,6 @@ public class PeopleController extends AbstractController {
 
     @PutMapping("/edit/{id}")
     public ResponseEntity editDetails(@Valid @RequestBody PeopleRequestDTO requestDTO, @PathVariable long id) {
-
-        //TODO validations for empty fields
 
         personService.editPersonDetails(requestDTO, id);
         return ResponseEntity.status(HttpStatus.OK)
