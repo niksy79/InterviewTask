@@ -1,10 +1,8 @@
 package com.example.peoplewebservisedemo.repository;
-
 import com.example.peoplewebservisedemo.model.entity.People;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Repository
@@ -12,10 +10,9 @@ public interface PersonRepository extends JpaRepository<People, Long> {
 
     List<People> findAllByFullNameContaining(String name);
 
-   Boolean existsByPin(String pin);
+    Boolean existsByPin(String pin);
 
-
-   List<People> findAll();
+    List<People> findAll();
 
 
 

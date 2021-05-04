@@ -24,18 +24,4 @@ public class AbstractController {
         return new ErrorDTO(new Date(), "Bad request error", e.getMessage());
     }
 
- /*  @ExceptionHandler(ConstraintViolationException.class)
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public String handleResourceNotFoundException(ConstraintViolationException e) {
-        Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
-        StringBuilder strBuilder = new StringBuilder();
-        for (ConstraintViolation<?> violation : violations ) {
-            strBuilder.append(violation.getMessage()).append("\n");
-        }
-        return strBuilder.toString();
-    }*/
-
-
-
-
 }

@@ -1,5 +1,4 @@
 package com.example.peoplewebservisedemo.service;
-
 import com.example.peoplewebservisedemo.dto.PeopleRequestDTO;
 import com.example.peoplewebservisedemo.dto.PeopleResponseDTO;
 import com.example.peoplewebservisedemo.exception.BadRequestException;
@@ -10,33 +9,35 @@ import com.example.peoplewebservisedemo.model.entity.People;
 import com.example.peoplewebservisedemo.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
+
 
 
 @Service
-public class PersonService {
+public class PersonService implements IPersonService {
 
     @Autowired
     PersonRepository personRepository;
 
+
+    @Override
     public PeopleResponseDTO insertPerson(PeopleRequestDTO requestDTO) {
 
         if (personRepository.existsByPin(requestDTO.getPin())) {
-            throw new BadRequestException("This person already exist");
+            throw new BadRequestException("Person with pin " + requestDTO.getPin() + " already exist");
         }
-
         People people = new People();
         people.setFullName(requestDTO.getFullName());
         people.setPin(requestDTO.getPin());
         people.setEmail(new Email(requestDTO.getEmail(), requestDTO.getEmailType(), people));
         people.setAddress(new Address(requestDTO.getAddress(), requestDTO.getAddrType(), people));
+
         personRepository.save(people);
 
         return new PeopleResponseDTO(people);
     }
 
+    @Override
     public List<People> getByName(String name) {
 
         List<People> result = personRepository.findAllByFullNameContaining(name);
@@ -46,6 +47,7 @@ public class PersonService {
         return result;
     }
 
+    @Override
     public People editPersonDetails(PeopleRequestDTO requestDTO, Long id) {
 
         People result = personRepository.findById(id).orElseThrow(() -> new NotFoundException("Person with id " + id + " was not found"));
@@ -67,6 +69,7 @@ public class PersonService {
         return result;
     }
 
+    @Override
     public void deletePersonById(long id) {
         People result = personRepository.findById(id).orElseThrow(() -> new NotFoundException("Person by id " + id + " was not found"));
         personRepository.delete(result);
