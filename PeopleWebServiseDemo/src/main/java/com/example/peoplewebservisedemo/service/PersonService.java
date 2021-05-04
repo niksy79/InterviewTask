@@ -1,4 +1,5 @@
 package com.example.peoplewebservisedemo.service;
+
 import com.example.peoplewebservisedemo.dto.PeopleRequestDTO;
 import com.example.peoplewebservisedemo.dto.PeopleResponseDTO;
 import com.example.peoplewebservisedemo.exception.BadRequestException;
@@ -9,6 +10,7 @@ import com.example.peoplewebservisedemo.model.entity.People;
 import com.example.peoplewebservisedemo.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -66,11 +68,8 @@ public class PersonService {
     }
 
     public void deletePersonById(long id) {
-        Optional<People> people = personRepository.findById(id);
-        if (people.isEmpty()) {
-            throw new NotFoundException("Person by id " + id + " was not found");
-        }
-        personRepository.delete(people.get());
+        People result = personRepository.findById(id).orElseThrow(() -> new NotFoundException("Person by id " + id + " was not found"));
+        personRepository.delete(result);
     }
 
 }
