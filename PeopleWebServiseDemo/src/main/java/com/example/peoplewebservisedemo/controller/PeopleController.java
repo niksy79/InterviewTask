@@ -37,7 +37,7 @@ public class PeopleController extends AbstractController {
         return personService.getByName(name);
     }
 
-    @PutMapping("/edit/{id}")
+    @PutMapping("/{id}/edit")
     public ResponseEntity<People> editDetails(@Valid @RequestBody PeopleRequestDTO requestDTO, @PathVariable long id) {
         People result = personService.editPersonDetails(requestDTO, id);
 
@@ -45,7 +45,7 @@ public class PeopleController extends AbstractController {
     }
 
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}/delete")
     public ResponseEntity delete(@PathVariable Long id) {
 
         personService.deletePersonById(id);
