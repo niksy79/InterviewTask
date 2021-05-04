@@ -46,11 +46,7 @@ public class PersonService {
 
     public People editPersonDetails(PeopleRequestDTO requestDTO, Long id) {
 
-        Optional<People> people = personRepository.findById(id);
-        if (people.isEmpty()) {
-            throw new NotFoundException("Person by id " + id + " was not found");
-        }
-        People result = people.get();
+        People result = personRepository.findById(id).orElseThrow(() -> new NotFoundException("Person with id " + id + " was not found"));
         Address address = result.getAddress();
         address.setAddrType(requestDTO.getAddrType());
         address.setAddrInfo(requestDTO.getAddress());
