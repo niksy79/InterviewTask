@@ -26,20 +26,25 @@ public class PeopleController extends AbstractController {
     }
 
     @PostMapping("/insert")
-    public ResponseEntity<PeopleResponseDTO> insertPerson(@Valid @RequestBody PeopleRequestDTO requestDTO) {
+    public ResponseEntity<PeopleResponseDTO> insertPerson(
+            @Valid @RequestBody PeopleRequestDTO requestDTO) {
+
         PeopleResponseDTO result = personService.insertPerson(requestDTO);
+
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     @GetMapping("/get/{name}")
-    public List<People> getPeopleByName(@PathVariable String name) {
+    public List<PeopleResponseDTO> getPeopleByName(@PathVariable String name) {
 
         return personService.getByName(name);
     }
 
     @PutMapping("/{id}/edit")
-    public ResponseEntity<People> editDetails(@Valid @RequestBody PeopleRequestDTO requestDTO, @PathVariable long id) {
-        People result = personService.editPersonDetails(requestDTO, id);
+    public ResponseEntity<PeopleResponseDTO> editDetails(
+            @Valid @RequestBody PeopleRequestDTO requestDTO,
+            @PathVariable long id) {
+        PeopleResponseDTO result = personService.editPersonDetails(requestDTO, id);
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }

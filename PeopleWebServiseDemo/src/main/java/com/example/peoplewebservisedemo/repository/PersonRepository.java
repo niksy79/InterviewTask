@@ -1,4 +1,5 @@
 package com.example.peoplewebservisedemo.repository;
+import com.example.peoplewebservisedemo.dto.PeopleResponseDTO;
 import com.example.peoplewebservisedemo.model.entity.People;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

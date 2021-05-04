@@ -10,9 +10,9 @@ public interface IPersonService {
 
     PeopleResponseDTO insertPerson(PeopleRequestDTO requestDTO);
 
-    List<People> getByName(String name);
+    List<PeopleResponseDTO> getByName(String name);
 
-    People editPersonDetails(PeopleRequestDTO requestDTO, Long id);
+   PeopleResponseDTO editPersonDetails(PeopleRequestDTO requestDTO, Long id);
 
     void deletePersonById(long id);
 }
